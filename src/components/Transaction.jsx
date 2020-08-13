@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import '../style/JS_FILE'
+
 
 class Transaction extends Component {
 
@@ -10,11 +10,20 @@ class Transaction extends Component {
     render() {
         let transaction = this.props.transaction
         return (
-            <div className='transaction' onClick={this.removeTransaction}>
-                <i className="fas fa-minus-circle"></i>
-                <div className='tran-vendor'>{transaction.vendor}</div>
-                <div className='tran-category'>{transaction.category}</div>
-                <div className='tran-amount'>$ {transaction.amount}.00</div>
+            <div>
+                {transaction.amount >= 0 ?
+                    <div className='transaction-pos'>
+                        <i className="fas fa-minus-circle" onClick={this.removeTransaction}></i>
+                        <div className='tran-category-pos'>{transaction.category}</div>
+                        <div className='tran-vendor-pos'>{transaction.vendor}</div>
+                        <div className='tran-amount-pos'>$ {transaction.amount}.00</div>
+                    </div> :
+                    <div className='transaction-neg'>
+                        <i className="fas fa-minus-circle" onClick={this.removeTransaction}></i>
+                        <div className='tran-category-neg'>{transaction.category}</div>
+                        <div className='tran-vendor-neg'>{transaction.vendor}</div>
+                        <div className='tran-amount-neg'>$ {transaction.amount}.00</div>
+                    </div>}
             </div>
         )
     }

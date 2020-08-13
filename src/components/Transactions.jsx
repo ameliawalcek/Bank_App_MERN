@@ -4,11 +4,13 @@ import Transaction from './Transaction';
 
 class Transactions extends Component {
 
-    getTransactions = () => this.props.data.map(d => <Transaction transaction={d} removeTransaction={this.props.removeTransaction}/>)
+    getTransactions = () => this.props.data.map(d => <Transaction key={d._id} transaction={d} removeTransaction={this.props.removeTransaction}/>)
 
     render() {
+
         return (
-            <div className='transactions'>
+            <div className='transactions-container'>
+                <div className='sub-header'>SUMMARY</div>
                 {this.getTransactions()}
             </div>
         )

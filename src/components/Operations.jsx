@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 //import '../style/JS_FILE'
+import { Link, Redirect } from 'react-router-dom'
 
 class Operations extends Component {
     constructor() {
@@ -35,8 +36,8 @@ class Operations extends Component {
                 <input type="text" name="vendor" id="vendor" onChange={this.handleInput} placeholder='Vendor' required />
                 <input type="text" name="category" id="category" onChange={this.handleInput} placeholder='Category' required />
                 <br />
-                <button name='deposit' onClick={this.addTransaction}>Deposit</button>
-                <button name='withdraw' onClick={this.addTransaction}>Withdraw</button>
+                <Link to='/'><button name='deposit' onClick={this.addTransaction}>Income</button></Link>
+                <Link to='/'><button name='withdraw' onClick={this.addTransaction}>Expense</button></Link>
             </div>
         )
     }

@@ -15,7 +15,7 @@ app.use(function (req, res, next) {
     next()
 })
 
-// app.use(express.static(path.join(__dirname, 'dist')))
+// app.use(express.static(path.join(__dirname, 'src')))
 // app.use(express.static(path.join(__dirname, 'node_modules')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
