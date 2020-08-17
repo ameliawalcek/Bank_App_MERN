@@ -1,20 +1,25 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Transaction from './Transaction';
-//import '../style/JS_FILE'
 
-class Transactions extends Component {
+function Transactions(props) {
 
-    getTransactions = () => this.props.data.map(d => <Transaction key={d._id} transaction={d} removeTransaction={this.props.removeTransaction}/>)
+    const getTransactions = () => props.data.map(d => {
+        let div
+        d.amount <= 0 ? div = 'neg' : div = 'pos'
 
-    render() {
-
-        return (
-            <div className='transactions-container'>
-                <div className='sub-header'>SUMMARY</div>
-                {this.getTransactions()}
+        return <Transaction key={d._id} div={div} transaction={d} removeTransaction={props.removeTransaction} />
+    })
+    
+    return (
+        <div className='transactions-container'>
+            <div className='sub-header'>SUMMARY</div>
+            <div className='summary'>
+                <div className='pos-sum'>${props.incomeSum}.00</div><div>|</div>
+                <div className='neg-sum'>${props.expenseSum}.00</div>
             </div>
-        )
-    }
+            {getTransactions()}
+        </div>
+    )
 }
 
 export default Transactions;

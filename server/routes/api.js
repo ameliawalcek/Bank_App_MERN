@@ -3,7 +3,7 @@ const router = express.Router()
 const Transaction = require('../model/Transaction')
 
 router.get('/transactions', (req, res) => {
-    Transaction.find({}).exec()
+    Transaction.find({}).sort({_id: -1}).exec()
         .then(transactions => { res.send(transactions) })
 })
 

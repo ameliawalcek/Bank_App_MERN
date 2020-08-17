@@ -1,18 +1,15 @@
-import React, { Component } from 'react';
-//import '../style/Categories'
+import React from 'react';
 
-class Category extends Component {
-    render() {
-        console.log('hello')
-        return (
-            <div>
-                <div className='category-container'>
-                        <div className='category-vendor'>{this.props.vendor}</div>
-                        <div className='tran-amount-neg'>$ {this.props.amount}.00</div>
-                    </div>
+function Category(props) {
+
+    return (
+        <div>
+            <div className='category-container' key={Math.random()}>
+                <div className='category-vendor'>{props.vendor}</div>
+                <div className='tran-amount-neg'>$ {props.amount}.00</div>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default Category;

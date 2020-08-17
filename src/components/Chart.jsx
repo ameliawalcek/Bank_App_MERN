@@ -1,22 +1,27 @@
 import React, { Component } from 'react';
-//import '../style/JS_FILE'
 import { PieChart } from 'react-minimal-pie-chart'
 
 class Chart extends Component {
+    constructor() {
+        super()
+        this.state = {
+            data: [
+                { title: 'Health', color: '#3bb273' },
+                { title: 'Fun', color: '#ee4266' },
+                { title: 'Family', color: '#540d6e' },
+                { title: 'Shopping', color: '#ec7d10' },
+                { title: 'Food', color: '#4d9de0' }
+            ]
+        };
+    }
 
     render() {
         return (
-            <div>
-                <div id='graph'>
-                    <PieChart
-                        data={[
-                            { title: 'Health', value: this.props.findCategory('Health'), color: '#3bb273' },
-                            { title: 'Fun', value: this.props.findCategory('Fun'), color: '#ee4266' },
-                            { title: 'Family', value: this.props.findCategory('Family'), color: '#540d6e' },
-                            { title: 'Shopping', value: this.props.findCategory('Shopping'), color: '#ec7d10' },
-                            { title: 'Food', value: this.props.findCategory('Food'), color: '#4d9de0' },
-                        ]} center={[50, 50]} lineWidth={15} radius={30} viewBoxSize={[100, 100]} />
-                </div>
+            <div id='chart'>
+                <PieChart
+                    data={this.state.data.map(d => {
+                        return { title: d.title, 'value': this.props.findCategory(d.title), color: d.color }
+                    })} lineWidth={20} radius={24} />
             </div>
         )
     }

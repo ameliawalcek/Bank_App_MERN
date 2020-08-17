@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Operations from './components/Operations';
 import Transactions from './components/Transactions';
 import Landing from './components/Landing'
@@ -10,14 +10,14 @@ const axios = require('axios')
 
 class App extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
       data: [],
       expenseSum: [],
       incomeSum: [],
       bankSum: [],
       categories: []
-    };
+    }
   }
 
   getData() {
@@ -33,24 +33,40 @@ class App extends Component {
   }
 
   async componentDidMount() {
+    const categories = await this.getCategories()
     const data = await this.getData()
     const sums = await this.getSums()
-    const categories = await this.getCategories()
+    let sumData = sums.data[0]
+
     this.setState({
+      categories: categories.data,
       data: data.data,
-      expenseSum: sums.data[0].expenses,
-      incomeSum: sums.data[0].income,
-      bankSum: sums.data[0].balance,
-      categories: categories.data
+      expenseSum: sumData.expenses,
+      incomeSum: sumData.income,
+      bankSum: sumData.balance,
     })
   }
 
+  async componentDidUpdate(prevState) {
+    // if (this.state.data !== prevState.data) {
+      const sums = await this.getSums()
+      let sumData = sums.data[0]
+      this.setState({
+        expenseSum: sumData.expenses,
+        incomeSum: sumData.income,
+        bankSum: sumData.balance,
+      })
+    // }
+  }
+
   addTransaction = async (amount, vendor, category, string) => {
-    amount = string === 'deposit' ? amount : -amount
+    amount = string === 'income' ? amount : -amount
+
     if (this.state.bankSum + amount > 0) {
       let transaction = { amount, vendor, category }
-      let data = await axios.post('http://localhost:4200/transaction', transaction)
-      data = this.state.data.concat(data.data)
+      let data = [...this.state.data]
+      let newData = await axios.post('http://localhost:4200/transaction', transaction)
+      data.unshift(newData.data)
       this.setState({ data })
     } else {
       alert('insufficient funds idiot!')
@@ -68,20 +84,27 @@ class App extends Component {
     return (
       <Router>
         <div id='main-container'>
-          <div id='top-bar'>
-            <div> 
-              <div id='account-header'>Account Balance</div>
-              <div id='account-sum'>${this.state.bankSum}.00</div>
-            </div>
-            <Link to='/transactions/operation'><i className="fas fa-plus"></i></Link>
+          <div id='top-bar'><div>
+            <Link to='/'><div id='account-header'>Account Balance</div></Link>
+            <div id='account-sum'>${this.state.bankSum}.00</div>
           </div>
+            <div className='plus'>
+              <Link to='/transactions/operation'><i className="fas fa-plus fa-lg" style={{ color: 'white' }}></i></Link></div>
+          </div>
+
           <div>
             <Route exact path='/' render={() => <Landing categories={this.state.categories} expenseSum={this.state.expenseSum} incomeSum={this.state.incomeSum} />} />
-            <Route exact path='/category/:category' render={({match}) => <Categories match={match} categories={this.state.categories}/>} />
+            <Route exact path='/category/:category' render={({ match }) => <Categories match={match} categories={this.state.categories} />} />
+            <Route exact path='/transactions' render={() => <Transactions removeTransaction={this.removeTransaction} data={this.state.data} expenseSum={this.state.expenseSum} incomeSum={this.state.incomeSum} />} />
             <Route exact path='/transactions/operation' render={() => <Operations addTransaction={this.addTransaction} />} />
-            <Route exact path='/transactions' render={() => <Transactions removeTransaction={this.removeTransaction} data={this.state.data} />} />
           </div>
-          <div id='bottom-bar'></div>
+
+          <div id='bottom-bar'>
+            <div id='bottom-bar-container'>
+              <Link to='/'><i className="fas fa-chart-pie fa-lg" style={{ color: '#8c8c8c' }}></i></Link>
+              <Link to='/transactions'><i className="far fa-credit-card fa-lg" style={{ color: '#8c8c8c' }}></i></Link>
+            </div>
+          </div>
         </div>
       </Router>
     )
