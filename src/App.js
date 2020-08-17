@@ -16,7 +16,7 @@ class App extends Component {
       expenseSum: [],
       incomeSum: [],
       bankSum: [],
-      categories: []
+      categories: [],
     }
   }
 
@@ -47,8 +47,8 @@ class App extends Component {
     })
   }
 
-  async componentDidUpdate(prevState) {
-    // if (this.state.data !== prevState.data) {
+  async componentDidUpdate(_, prevState) {
+    if (this.state.data.length !== prevState.data.length) {
       const sums = await this.getSums()
       let sumData = sums.data[0]
       this.setState({
@@ -56,7 +56,7 @@ class App extends Component {
         incomeSum: sumData.income,
         bankSum: sumData.balance,
       })
-    // }
+    }
   }
 
   addTransaction = async (amount, vendor, category, string) => {
@@ -69,7 +69,7 @@ class App extends Component {
       data.unshift(newData.data)
       this.setState({ data })
     } else {
-      alert('insufficient funds idiot!')
+      alert('insufficient funds')
     }
   }
 

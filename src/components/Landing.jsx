@@ -4,10 +4,11 @@ import Chart from './Chart'
 
 function Landing(props) {
 
+    
     const findCategory = (str) => {
         let categories = props.categories
         let category = categories.length && categories.find(c => c._id === str)
-        return category.total
+        return category ? category.total : []
     }
 
     return (
