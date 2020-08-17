@@ -25,7 +25,6 @@ function Landing(props) {
                     <div className='pos'>$ {props.incomeSum}</div>
                 </div>
             </div>
-
             <div className='three'>
                 <SubLanding categoryInfo={props.categoryInfo[3]} findCategory={findCategory} />
                 <SubLanding categoryInfo={props.categoryInfo[4]} findCategory={findCategory} />
