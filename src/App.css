@@ -167,55 +167,55 @@ i{
   grid-area: graph;
 }
 
-#health{
+#Health{
   text-align: center;
   grid-area: health;
 }
-.health{
+.Health{
   font-weight: bold;
   font-size: 15px;
   color: #3bb273;
 }
 
-#fun{
+#Fun{
   text-align: center;
   grid-area: fun;
   align-self: self-start;
   justify-self: left;
 }
-.fun{
+.Fun{
   font-weight: bold;
   font-size: 15px;
   color: #ee4266;
 }
 
-#family{
+#Family{
   text-align: center;
   grid-area: family;
   align-self: start;
   justify-self: self-end;
 }
-.family{
+.Family{
   font-weight: bold;
   font-size: 15px;
   color: #540d6e
 }
 
-#food{
+#Food{
   text-align: center;
   margin-top: 20px;
 }
-.food{
+.Food{
   color: #4d9de0;
   font-weight: bold;
   font-size: 15px;
 }
 
-#shopping{
+#Shopping{
   text-align: center;
   grid-area: shopping;
 }
-.shopping{
+.Shopping{
   font-weight: bold;
   font-size: 15px;
   color: #ec7d10

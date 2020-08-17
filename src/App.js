@@ -17,6 +17,13 @@ class App extends Component {
       incomeSum: [],
       bankSum: [],
       categories: [],
+      categoryInfo: [
+        {name: 'Food', icon: 'fas fa-utensils', color: '#4d9de0'},
+        {name: 'Fun', icon: 'fas fa-film', color: '#ee4266'},
+        {name: 'Family', icon: 'far fa-heart', color: '#540d6e'},
+        {name: 'Shopping', icon: 'fas fa-shopping-cart', color: '#ec7d10'},
+        {name: 'Health', icon: 'fas fa-leaf', color: '#3bb273'}
+      ]
     }
   }
 
@@ -75,7 +82,7 @@ class App extends Component {
 
   removeTransaction = async (id) => {
     await axios.delete(`http://localhost:4200/transaction/${id}`)
-    let data = [... this.state.data]
+    let data = [...this.state.data]
     let newData = data.filter(d => d._id !== id)
     this.setState({ data: newData })
   }
@@ -93,8 +100,8 @@ class App extends Component {
           </div>
 
           <div>
-            <Route exact path='/' render={() => <Landing categories={this.state.categories} expenseSum={this.state.expenseSum} incomeSum={this.state.incomeSum} />} />
-            <Route exact path='/category/:category' render={({ match }) => <Categories match={match} categories={this.state.categories} />} />
+            <Route exact path='/' render={() => <Landing categories={this.state.categories} expenseSum={this.state.expenseSum} incomeSum={this.state.incomeSum}  categoryInfo={this.state.categoryInfo}/>} />
+            <Route exact path='/category/:category' render={({ match }) => <Categories match={match} categories={this.state.categories}/>} />
             <Route exact path='/transactions' render={() => <Transactions removeTransaction={this.removeTransaction} data={this.state.data} expenseSum={this.state.expenseSum} incomeSum={this.state.incomeSum} />} />
             <Route exact path='/transactions/operation' render={() => <Operations addTransaction={this.addTransaction} />} />
           </div>
