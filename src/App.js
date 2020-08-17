@@ -71,8 +71,8 @@ class App extends Component {
 
     if (this.state.bankSum + amount > 0) {
       let transaction = { amount, vendor, category }
-      let data = [...this.state.data]
       let newData = await axios.post('http://localhost:4200/transaction', transaction)
+      let data = [...this.state.data]
       data.unshift(newData.data)
       this.setState({ data })
     } else {
@@ -98,14 +98,12 @@ class App extends Component {
             <div className='plus'>
               <Link to='/transactions/operation'><i className="fas fa-plus fa-lg" style={{ color: 'white' }}></i></Link></div>
           </div>
-
           <div>
             <Route exact path='/' render={() => <Landing categories={this.state.categories} expenseSum={this.state.expenseSum} incomeSum={this.state.incomeSum}  categoryInfo={this.state.categoryInfo}/>} />
             <Route exact path='/category/:category' render={({ match }) => <Categories match={match} categories={this.state.categories}/>} />
             <Route exact path='/transactions' render={() => <Transactions removeTransaction={this.removeTransaction} data={this.state.data} expenseSum={this.state.expenseSum} incomeSum={this.state.incomeSum} />} />
             <Route exact path='/transactions/operation' render={() => <Operations addTransaction={this.addTransaction} />} />
           </div>
-
           <div id='bottom-bar'>
             <div id='bottom-bar-container'>
               <Link to='/'><i className="fas fa-chart-pie fa-lg" style={{ color: '#8c8c8c' }}></i></Link>
