@@ -17,13 +17,13 @@ function Landing(props) {
             </div>
             <div className='two'>
                 <SubLanding categoryInfo={props.categoryInfo[1]} findCategory={findCategory} />
+                <SubLanding categoryInfo={props.categoryInfo[2]} findCategory={findCategory} />
                 <Chart findCategory={findCategory} />
                 <div id='expenses'>
                     <div>Expenses</div>
                     <div className='neg'>$ {props.expenseSum}</div>
                     <div className='pos'>$ {props.incomeSum}</div>
                 </div>
-                <SubLanding categoryInfo={props.categoryInfo[2]} findCategory={findCategory} />
             </div>
 
             <div className='three'>
