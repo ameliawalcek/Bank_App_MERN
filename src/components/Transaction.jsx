@@ -1,27 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Transaction extends Component {
+function Transaction(props) {
+    let { transaction, div } = props
 
-    removeTransaction = () => {
-        this.props.removeTransaction(this.props.transaction._id)
+    const removeTransaction = () => {
+        props.removeTransaction(transaction._id)
     }
 
-
-
-    render() {
-        let transaction = this.props.transaction
-        let div = this.props.div
-        return (
-            <div>
-                <div className={`transaction-${div}`}>
-                    <i className="fas fa-minus-circle" onClick={this.removeTransaction}></i>
-                    <div className={`tran-category-${div}`}>{transaction.category}</div>
-                    <div className={`tran-vendor-${div}`}>{transaction.vendor}</div>
-                    <div className={`tran-amount-${div}`}>$ {transaction.amount}.00</div>
-                </div>
-            </div>
-        )
-    }
+    return (
+        <div className={`transaction-${div}`}>
+            <i className="fas fa-minus-circle" onClick={removeTransaction}></i>
+            <div className={`tran-category-${div}`}>{transaction.category}</div>
+            <div className={`tran-vendor-${div}`}>{transaction.vendor}</div>
+            <div className={`tran-amount-${div}`}>$ {transaction.amount}.00</div>
+        </div>
+    )
 }
 
 export default Transaction;

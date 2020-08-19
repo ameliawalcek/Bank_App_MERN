@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
+import { categoryInfo } from '../data/data'
 
 class Operations extends Component {
     constructor() {
@@ -7,20 +8,15 @@ class Operations extends Component {
         this.state = {
             amount: '',
             vendor: '',
-            category: '',
-            categories: ['Select Category', 'Family', 'Salary', 'Fun', 'Health', 'Shopping']
-        };
+            category: ''
+        }
     }
 
     addTransaction = ({ target }) => {
-        let amount = parseInt(this.state.amount)
-        let vendor = this.state.vendor
-        let category = this.state.category
-        let str
+        let { vendor, category, amount } = this.state
+        amount = parseInt(amount)
 
-        target.name === 'expense' ? str = 'expense' : str = 'income'
-
-        return this.props.addTransaction(amount, vendor, category, str)
+        return this.props.addTransaction(amount, vendor, category, target.name)
     }
 
     handleInput = ({ target }) => {
@@ -32,10 +28,12 @@ class Operations extends Component {
             <div className='operation-container'>
                 <div className='input-container'>
                     <div className='new'>Enter new expense</div>
-                    <input type="number" name="amount" id="amount" onChange={this.handleInput} placeholder='Amount' required />
-                    <input type="text" name="vendor" id="vendor" onChange={this.handleInput} placeholder='Vendor' required />
+                    <input name="amount" onChange={this.handleInput} type="number" id="amount" placeholder='Amount' required />
+                    <input name="vendor" onChange={this.handleInput} type="text" id="vendor" placeholder='Vendor' required />
                     <select name="category" id="category" onChange={this.handleInput} value={this.state.category}>
-                        {this.state.categories.map(c => <option value={c} onChange={this.handleInput} key={Math.random()}>{c}</option>)}
+                        <option value='selectCategory'>Select Category</option>
+                        <option value='Salary'>Salary</option>
+                        {categoryInfo.map(c => <option value={c.name} onChange={this.handleInput} key={Math.random()}>{c.name}</option>)}
                     </select>
                 </div>
                 <div className='button-container'>
