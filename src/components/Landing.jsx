@@ -14,21 +14,15 @@ function Landing(props) {
     return (
         <div id='category-container'>
             <div className='one'>
-                <SubLanding categoryInfo={categoryInfo[0]} categorySum={findCategorySum} />
+                {categoryInfo.map(c => <SubLanding categoryInfo={c} categorySum={findCategorySum} key={Math.random()}/>)}
             </div>
             <div className='two'>
-                <SubLanding categoryInfo={categoryInfo[1]} categorySum={findCategorySum} />
-                <SubLanding categoryInfo={categoryInfo[2]} categorySum={findCategorySum} />
-                <Chart categorySum={findCategorySum}/>
+                <Chart categorySum={findCategorySum} />
                 <div id='expenses'>
                     <div>Expenses</div>
                     <div className='neg'>$ {expenseSum}</div>
                     <div className='pos'>$ {incomeSum}</div>
                 </div>
-            </div>
-            <div className='three'>
-                <SubLanding categoryInfo={categoryInfo[3]} categorySum={findCategorySum} />
-                <SubLanding categoryInfo={categoryInfo[4]} categorySum={findCategorySum} />
             </div>
         </div>
     )

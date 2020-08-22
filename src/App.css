@@ -125,25 +125,8 @@ i{
 }
 
 #category-container{
-  display: grid;
   height: 77vh;
   width: 100%;
-  grid-template-rows: .5fr 1fr .6fr;
-}
-
-.two{
-  display: grid;
-  grid-auto-columns: 1fr 1fr 1fr;
-  grid-template-areas: 'fun graph family';
-  justify-items: center;
-  align-items: center;
-}
-
-.three{
-  grid-template-areas: 'shopping health';
-  display: grid;
-  align-items: center;
-  justify-content: space-evenly;
 }
 
 #chart{
@@ -158,18 +141,35 @@ i{
 }
 
 #expenses{
-  z-index: 3;
-  width: auto;
-  height: auto;
+  width: 80px;
+  height: 80px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -29px;
+  margin-left: -37px;
+  z-index: -9;
   text-align: center;
-  top: 20px;
-  position: relative;
-  grid-area: graph;
+}
+
+.one{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  height: 80vh;
+  width: 100%;
 }
 
 #Health{
+  width: 80px;
+  height: 80px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: 132px;
+  margin-left: -37px;
+  z-index: -9;
   text-align: center;
-  grid-area: health;
 }
 .Health{
   font-weight: bold;
@@ -179,9 +179,7 @@ i{
 
 #Fun{
   text-align: center;
-  grid-area: fun;
-  align-self: self-start;
-  justify-self: left;
+  align-self: end;
 }
 .Fun{
   font-weight: bold;
@@ -191,9 +189,8 @@ i{
 
 #Family{
   text-align: center;
-  grid-area: family;
-  align-self: start;
-  justify-self: self-end;
+  align-self: end;
+  justify-self: left;
 }
 .Family{
   font-weight: bold;
@@ -203,7 +200,7 @@ i{
 
 #Food{
   text-align: center;
-  margin-top: 20px;
+  align-self: end;
 }
 .Food{
   color: #4d9de0;
@@ -213,7 +210,8 @@ i{
 
 #Shopping{
   text-align: center;
-  grid-area: shopping;
+  align-self: end;
+  justify-self: right;
 }
 .Shopping{
   font-weight: bold;
