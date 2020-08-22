@@ -14,9 +14,9 @@ function Landing(props) {
     return (
         <div id='category-container'>
             <div className='one'>
-                {categoryInfo.map(c => <SubLanding categoryInfo={c} categorySum={findCategorySum} key={Math.random()}/>)}
+                {categoryInfo.map(c => <SubLanding categoryInfo={c} categorySum={findCategorySum} key={Math.random()} />)}
             </div>
-            <div className='two'>
+            <div>
                 <Chart categorySum={findCategorySum} />
                 <div id='expenses'>
                     <div>Expenses</div>

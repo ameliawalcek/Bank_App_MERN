@@ -13,7 +13,7 @@ function Categories(props) {
     }
 
     return (
-        <div className='category-main-container'>
+        <div>
             <div className='sub-header'>{category.toUpperCase()}</div>
             {displayCategory()}
         </div>
