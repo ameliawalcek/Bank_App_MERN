@@ -1,48 +1,37 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom'
 import { categoryInfo } from '../data/data'
+import { observer, inject } from 'mobx-react'
 
-class Operations extends Component {
-    constructor() {
-        super()
-        this.state = {
-            amount: '',
-            vendor: '',
-            category: ''
-        }
-    }
+const Operations = inject("transaction", "input")(observer((props) => {
+    let { vendor, category, amount, handleInput } = props.input
 
-    addTransaction = ({ target }) => {
-        let { vendor, category, amount } = this.state
+    const addTransaction = ({ target }) => {
         amount = parseInt(amount)
 
-        return this.props.addTransaction(amount, vendor, category, target.name)
+        return props.transaction.addTransaction(amount, vendor, category, target.name)
     }
 
-    handleInput = ({ target }) => {
-        this.setState({ [target.name]: target.value })
-    }
-
-    render() {
-        return (
-            <div className='operation-container'>
-                <div className='input-container'>
-                    <div className='new'>Enter new expense</div>
-                    <input name="amount" onChange={this.handleInput} type="number" id="amount" placeholder='Amount' required />
-                    <input name="vendor" onChange={this.handleInput} type="text" id="vendor" placeholder='Vendor' required />
-                    <select name="category" id="category" onChange={this.handleInput} value={this.state.category}>
-                        <option value='selectCategory'>Select Category</option>
-                        <option value='Salary'>Salary</option>
-                        {categoryInfo.map(c => <option value={c.name} onChange={this.handleInput} key={Math.random()}>{c.name}</option>)}
-                    </select>
-                </div>
-                <div className='button-container'>
-                    <Link to='/transactions'><button name='income' onClick={this.addTransaction}>Income</button></Link>
-                    <Link to='/transactions'><button name='expense' onClick={this.addTransaction}>Expense</button></Link>
-                </div>
+    return (
+        <div className='operation-container'>
+            <div className='input-container'>
+                <div className='new'>Enter new expense</div>
+                <input name="amount" onChange={handleInput} type="number" id="amount" placeholder='Amount' required />
+                <input name="vendor" onChange={handleInput} type="text" id="vendor" placeholder='Vendor' required />
+                <select name="category" id="category" onChange={handleInput} value={category}>
+                    <option value='selectCategory'>Select Category</option>
+                    <option value='Salary'>Salary</option>
+                    {categoryInfo.map(c => {
+                        return <option value={c.name} onChange={handleInput} key={Math.random()}>{c.name}</option>
+                    })}
+                </select>
             </div>
-        )
-    }
-}
+            <div className='button-container'>
+                <Link to='/transactions'><button name='income' onClick={addTransaction}>Income</button></Link>
+                <Link to='/transactions'><button name='expense' onClick={addTransaction}>Expense</button></Link>
+            </div>
+        </div>
+    )
+}))
 
 export default Operations;

@@ -1,78 +1,24 @@
 import React, { Component } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import Operations from './components/Operations';
 import Transactions from './components/Transactions';
-import Landing from './components/Landing'
+import Operations from './components/Operations';
 import Categories from './components/Categories';
-import axios from 'axios'
+import Landing from './components/Landing'
+import { observer, inject } from 'mobx-react'
 
+@inject('transaction')
+@observer
 class App extends Component {
-  constructor() {
-    super()
-    this.state = {
-      data: [],
-      dataSum: [],
-      categories: [],
-    };
-  }
-
-  getData() {
-    return axios.get("http://localhost:4200/transactions")
-  }
-
-  getSums() {
-    return axios.get('http://localhost:4200/transactions/sums')
-  }
-
-  getCategories() {
-    return axios.get(`http://localhost:4200/categories`)
-  }
 
   async componentDidMount() {
-    const categories = await this.getCategories()
-    const data = await this.getData()
-    const sums = await this.getSums()
-    let dataSum = sums.data[0]
-
-    this.setState({
-      categories: categories.data,
-      data: data.data,
-      dataSum: dataSum,
-    })
-  }
-
-  async componentDidUpdate(_, prevState) {
-    if (this.state.data.length !== prevState.data.length) {
-      const sums = await this.getSums()
-      let dataSum = sums.data[0]
-      this.setState({ dataSum })
-    }
-  }
-
-  addTransaction = async (amount, vendor, category, string) => {
-    amount = string === 'income' ? amount : -amount
-
-    if (this.state.dataSum.balance + amount > 0) {
-      let transaction = { amount, vendor, category }
-      let newData = await axios.post('http://localhost:4200/transaction', transaction)
-      let data = [...this.state.data]
-      data.unshift(newData.data)
-      this.setState({ data })
-    } else {
-      alert('insufficient funds')
-    }
-  }
-
-  removeTransaction = async (id) => {
-    await axios.delete(`http://localhost:4200/transaction/${id}`)
-    let data = [...this.state.data]
-    data = data.filter(d => d._id !== id)
-    this.setState({ data })
+    await this.props.transaction.getCategories()
+    await this.props.transaction.getData()
+    await this.props.transaction.getSums()
   }
 
   render() {
-    let { dataSum, categories, data } = this.state
+    let { dataSum } = this.props.transaction
     return (
       <Router>
         <div id='main-container'>
@@ -84,10 +30,10 @@ class App extends Component {
               <Link to='/transactions/operation'><i className="fas fa-plus fa-lg" style={{ color: 'white' }}></i></Link></div>
           </div>
           <div>
-            <Route exact path='/' render={() => <Landing categories={categories} expenseSum={dataSum.expenses} incomeSum={dataSum.income}/>} />
-            <Route exact path='/category/:category' render={({ match }) => <Categories match={match} categories={categories} />} />
-            <Route exact path='/transactions' render={() => <Transactions removeTransaction={this.removeTransaction} data={data} expenseSum={dataSum.expenses} incomeSum={dataSum.income} />} />
-            <Route exact path='/transactions/operation' render={() => <Operations addTransaction={this.addTransaction}/>} />
+            <Route exact path='/' render={() => <Landing />} />
+            <Route exact path='/category/:category' render={({ match }) => <Categories match={match} />} />
+            <Route exact path='/transactions' render={() => <Transactions />} />
+            <Route exact path='/transactions/operation' render={() => <Operations />} />
           </div>
           <div id='bottom-bar'>
             <div id='bottom-bar-container'>

@@ -1,20 +1,22 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react'
 
-function Transaction(props) {
-    let { transaction, div } = props
+const Transaction = inject("transaction")(observer((props) => {
+    let { transactions, div } = props
 
     const removeTransaction = () => {
-        props.removeTransaction(transaction._id)
+        props.transaction.removeTransaction(transactions._id)
+        props.transaction.getSums()
     }
 
     return (
         <div className={`transaction-${div}`}>
             <i className="fas fa-minus-circle" onClick={removeTransaction}></i>
-            <div className={`tran-category-${div}`}>{transaction.category}</div>
-            <div className={`tran-vendor-${div}`}>{transaction.vendor}</div>
-            <div className={`tran-amount-${div}`}>$ {transaction.amount}.00</div>
+            <div className={`tran-category-${div}`}>{transactions.category}</div>
+            <div className={`tran-vendor-${div}`}>{transactions.vendor}</div>
+            <div className={`tran-amount-${div}`}>$ {transactions.amount}.00</div>
         </div>
     )
-}
+}))
 
 export default Transaction;

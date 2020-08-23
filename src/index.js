@@ -3,10 +3,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { Provider } from 'mobx-react'
+import { Transaction } from '../src/stores/TransactionStore';
+import { Input } from '../src/stores/InputStore';
 
-ReactDOM.render(<App />, document.getElementById('root'));
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+let input = new Input()
+let transaction = new Transaction()
+let stores = { transaction, input }
+
+ReactDOM.render(
+    <Provider {...stores}>
+        <App />
+    </Provider>
+    , document.getElementById('root'));
+
 serviceWorker.unregister();
