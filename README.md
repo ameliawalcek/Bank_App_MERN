@@ -4,7 +4,7 @@ Track your account total and veiw expenses by category.
 Technology used: React, MobX, MongoDB, Mongoose, Express, pure CSS
 
 ### Landing page
-View all income and expenses in one place organized by category <br/><br/>
+View all income and expenses in one place organized by category. From the landing page you can navigate to all the other parts of the expense tracker. <br/><br/>
 <img src="https://i.ibb.co/m4gz79M/HomePage.jpg" alt="HomePage" border="0" height="600px">
 
 ### Expense summary
